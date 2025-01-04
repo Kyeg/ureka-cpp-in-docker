@@ -1,0 +1,41 @@
+## Alpine: ~10MB, basic+zsh+cbuild+ureka-cpp Dependencies: ~320MB
+FROM alpine:3.20
+
+## Required packages (also, Combining Commands to Save Space)
+RUN apk update \
+    && apk add \
+    curl \
+    git \
+    vim \
+    tree \
+    ## C Build
+    build-base \
+    # gcc \
+    # g++ \
+    # make \
+    ## <Optional> CMake (for self-built GoogleTest)
+    # cmake \
+    ## <Optional> Python (for testing self-built mbedtls)
+    # python3 \
+    ## <Optional> Zsh
+    zsh \
+    zsh-vcs \
+    ## <Dependencies> Ureka-Cpp
+    nlohmann-json \
+    mbedtls2-dev \ 
+    gtest-dev
+
+## Working Directory
+WORKDIR /root
+
+## <Optional> Oh-My-Zsh (& Configuration)
+RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+COPY ./installed/zshrc /root/.zshrc
+
+## <Dependencies (Self-build)> Ureka-Cpp: nlohmann-json, mbedtls, gtest
+##      <Warning> It will simply replace entire system local path. 
+##                If you want to install other packages in system local path, do further management.
+# COPY ./installed/alpine_mac/prebuilt_nlohmann_mbedtls_and_gtest_lib /usr/local
+
+## CMD
+CMD [ "zsh" ]

@@ -1,0 +1,5 @@
+.DS_Store
+.bash_history
+.vscode
+**/*.o
+**/my_program*

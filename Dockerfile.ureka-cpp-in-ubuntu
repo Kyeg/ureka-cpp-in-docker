@@ -1,0 +1,49 @@
+## Ubuntu: ~100MB, basic+zsh: ~195MB, cbuild: ~288MB, ureka-cpp Dependencies: ~11MB
+FROM ubuntu:24.04
+
+## Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+## Required packages (also, Combining Commands to Save Space)
+RUN apt update \
+    && apt install -y \
+    ## Sometimes Error-prone: --no-install-recommends
+    # && apt install -y --no-install-recommends \
+    curl \
+    git \
+    vim \
+    tree \
+    ## C Build
+    build-essential \
+    # gcc \
+    # g++ \
+    # make \
+    ## <Optional> CMake (for self-built GoogleTest)
+    # cmake \
+    ## <Optional> Python (for testing self-built mbedtls)
+    # python3 \
+    ## <Optional> Zsh
+    zsh \
+    fonts-powerline \
+    ## <Dependencies> Ureka-Cpp
+    nlohmann-json3-dev \
+    libmbedtls-dev \
+    libgtest-dev
+
+## Working Directory
+WORKDIR /root
+
+## <Optional> Oh-My-Zsh (& Configuration)
+RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+COPY ./installed/zshrc /root/.zshrc
+
+## <Optional> Set Zsh as default shell
+RUN chsh -s $(which zsh)
+
+## <Dependencies (Self-build)> Ureka-Cpp: nlohmann-json, mbedtls, gtest
+##      <Warning> It will simply replace entire system local path. 
+##                If you want to install other packages in system local path, do further management.
+# COPY ./installed/ubuntu_mac/prebuilt_nlohmann_mbedtls_and_gtest_lib /usr/local
+
+## CMD
+CMD [ "zsh" ]
