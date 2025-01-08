@@ -1,11 +1,9 @@
-## Alpine: ~10MB, basic+zsh+cbuild+ureka-cpp Dependencies: ~320MB
+## Alpine: ~10MB, basic+zsh+cbuild+ureka-cpp Dependencies: ~277MB (Mac-arm64), ~412MB (Windows-amd64)
 FROM alpine:3.20
 
 ## Required packages (also, Combining Commands to Save Space)
 RUN apk update \
     && apk add \
-    curl \
-    git \
     vim \
     tree \
     ## C Build
@@ -17,9 +15,11 @@ RUN apk update \
     # cmake \
     ## <Optional> Python (for testing self-built mbedtls)
     # python3 \
-    ## <Optional> Zsh
+    ## <Optional> Zsh & Oh-My-Zsh
     zsh \
     zsh-vcs \
+    curl \
+    git \
     ## <Dependencies> Ureka-Cpp
     nlohmann-json \
     mbedtls2-dev \ 

@@ -1,4 +1,5 @@
-## Ubuntu: ~100MB, basic+zsh: ~195MB, cbuild: ~288MB, ureka-cpp Dependencies: ~11MB
+## Ubuntu: ~100MB, basic+zsh: ~195MB, cbuild: ~288MB, ureka-cpp Dependencies: ~11MB (Mac-arm64)
+## Totally: ~594MB (Mac-arm64), ~854MB (Windows-amd64)
 FROM ubuntu:24.04
 
 ## Avoid prompts from apt
@@ -9,8 +10,6 @@ RUN apt update \
     && apt install -y \
     ## Sometimes Error-prone: --no-install-recommends
     # && apt install -y --no-install-recommends \
-    curl \
-    git \
     vim \
     tree \
     ## C Build
@@ -22,9 +21,11 @@ RUN apt update \
     # cmake \
     ## <Optional> Python (for testing self-built mbedtls)
     # python3 \
-    ## <Optional> Zsh
+    ## <Optional> Zsh & Oh-My-Zsh
     zsh \
     fonts-powerline \
+    curl \
+    git \
     ## <Dependencies> Ureka-Cpp
     nlohmann-json3-dev \
     libmbedtls-dev \
