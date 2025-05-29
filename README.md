@@ -14,6 +14,10 @@
 + Testing: Google Test
 
 
+## System Overview
++ ![overview-diagram](doc/overview-diagram.png)
+
+
 ## Get Started: Container (Docker) Environment
 
 Requirement: MacOS or WSL in Windows
